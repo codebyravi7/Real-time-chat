@@ -4,10 +4,11 @@ import express from "express";
 
 const app = express();
 const server = http.createServer(app);
-
+// const front_url = "http://localhost:5173";
+const front_url = "https://real-time-chat-dusky-nine.vercel.app";
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: [front_url],
   },
 });
 

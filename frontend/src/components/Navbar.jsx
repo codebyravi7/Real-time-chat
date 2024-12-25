@@ -3,31 +3,23 @@ import { useAuthStore } from "../store/useAuthStore";
 import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 import CreateGroupModal from "./Modal";
 import { useState } from "react";
+import axios from "axios";
+import { axiosInstance } from "../lib/axios";
 
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCreateGroup = async (groupData) => {
     try {
-      console.log(groupData);
-      const response = await fetch("/api/groups/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(groupData),
+      const response = await axiosInstance.post("/groups/create", {
+        groupData,
       });
-
-      if (response.ok) {
-        alert("Group created successfully!");
-      } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
-      }
+      console.log(response.data);
     } catch (err) {
       console.error("Failed to create group:", err);
     }
   };
+
   return (
     <header
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
